@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::fs::{read_to_string, create_dir_all};
 use std::io::ErrorKind;
 use std::process::Command;
 
@@ -33,6 +33,7 @@ pub fn get_input(day: i32) -> String {
 }
 
 fn load_input(day: &str, path: &str){
+    create_dir_all("./in").unwrap();
     let cookies = match read_to_string("./.cookies"){
         Ok(s) => s,
         Err(e) => {
