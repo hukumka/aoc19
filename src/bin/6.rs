@@ -9,26 +9,27 @@ fn main() {
     println!("part2: {}", part2(&parent, "YOU", "SAN"));
 }
 
-fn part2(parent:  &HashMap<&str, &str>, one: &str, other: &str) -> usize{
+fn part2(parent: &HashMap<&str, &str>, one: &str, other: &str) -> usize {
     let p1 = parents(&parent, one);
     let p2 = parents(&parent, other);
     let common = p1.iter().zip(&p2).filter(|(a, b)| a == b).count();
     p1.len() + p2.len() - common * 2
 }
 
-fn part1(parent: &HashMap<&str, &str>) -> usize{
+fn part1(parent: &HashMap<&str, &str>) -> usize {
     let mut count = 0;
     let mut cache = HashMap::new();
-    for i in parent.keys(){
+    for i in parent.keys() {
         count += parent_count(&mut cache, &parent, *i);
     }
     count
 }
 
-fn build_orbits(input: &str) -> HashMap<&str, &str>{
-    input.trim()
+fn build_orbits(input: &str) -> HashMap<&str, &str> {
+    input
+        .trim()
         .lines()
-        .map(|s|{
+        .map(|s| {
             let mut i = s.split(')');
             let parent = i.next().unwrap();
             let child = i.next().unwrap();

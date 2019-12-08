@@ -62,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn test_input(){
+    fn test_input() {
         let data: Vec<_> = include_str!("../../tests/2/input")
             .trim()
             .split(',')

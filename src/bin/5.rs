@@ -26,11 +26,11 @@ fn exec(input: Vec<i32>, x: i32) -> i32 {
 }
 
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
-    fn test_input(){
+    fn test_input() {
         let input: Vec<_> = include_str!("../../tests/5/input")
             .trim()
             .split(',')

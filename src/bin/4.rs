@@ -41,11 +41,11 @@ fn can_be_password(x: u32) -> bool {
 }
 
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
-    fn test_input(){
+    fn test_input() {
         let (from, to) = (137683, 596253);
         assert_eq!(part1(from, to), 1864);
         assert_eq!(part2(from, to), 1258);
