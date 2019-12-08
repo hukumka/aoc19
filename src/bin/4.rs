@@ -39,3 +39,15 @@ fn can_be_password(x: u32) -> bool {
     let duo = s.as_bytes().windows(2).any(|x| x[0] == x[1]);
     inc && duo
 }
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+    fn test_input(){
+        let (from, to) = (137683, 596253);
+        assert_eq!(part1(from, to), 1864);
+        assert_eq!(part2(from, to), 1258);
+    }
+}

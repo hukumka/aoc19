@@ -1,40 +1,40 @@
 use aoc19::get_input;
-use reformation::Reformation;
 use std::collections::HashMap;
-
-#[derive(Reformation)]
-#[reformation(r"{parent}\){child}")]
-struct Input<'a> {
-    parent: &'a str,
-    child: &'a str,
-}
 
 fn main() {
     let input = get_input(6);
-    let orbits: Vec<_> = input
-        .trim()
-        .lines()
-        .map(|s| Input::parse(s).unwrap())
-        .collect();
+    let parent = build_orbits(&input);
 
-    let mut parent = HashMap::new();
-    for i in &orbits {
-        parent.insert(i.child, i.parent);
-    }
+    println!("part1: {}", part1(&parent));
+    println!("part2: {}", part2(&parent, "YOU", "SAN"));
+}
 
-    // part1
+fn part2(parent:  &HashMap<&str, &str>, one: &str, other: &str) -> usize{
+    let p1 = parents(&parent, one);
+    let p2 = parents(&parent, other);
+    let common = p1.iter().zip(&p2).filter(|(a, b)| a == b).count();
+    p1.len() + p2.len() - common * 2
+}
+
+fn part1(parent: &HashMap<&str, &str>) -> usize{
     let mut count = 0;
     let mut cache = HashMap::new();
-    for i in &orbits {
-        count += parent_count(&mut cache, &parent, i.child);
+    for i in parent.keys(){
+        count += parent_count(&mut cache, &parent, *i);
     }
-    println!("part1: {}", count);
+    count
+}
 
-    // part2
-    let p1 = parents(&parent, "YOU");
-    let p2 = parents(&parent, "SAN");
-    let common = p1.iter().zip(&p2).filter(|(a, b)| a == b).count();
-    println!("part2: {}", p1.len() + p2.len() - common * 2);
+fn build_orbits(input: &str) -> HashMap<&str, &str>{
+    input.trim()
+        .lines()
+        .map(|s|{
+            let mut i = s.split(')');
+            let parent = i.next().unwrap();
+            let child = i.next().unwrap();
+            (child, parent)
+        })
+        .collect()
 }
 
 fn parents<'a>(parent: &HashMap<&'a str, &'a str>, mut node: &'a str) -> Vec<&'a str> {
@@ -62,4 +62,18 @@ fn parent_count<'a>(
     };
     cache.insert(node, res);
     res
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_input() {
+        let input = include_str!("../../tests/6/input");
+        let parent = build_orbits(&input);
+
+        assert_eq!(part1(&parent), 271151);
+        assert_eq!(part2(&parent, "YOU", "SAN"), 388);
+    }
 }

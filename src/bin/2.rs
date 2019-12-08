@@ -60,4 +60,15 @@ mod tests {
         run_program(&mut input);
         assert_eq!(input, vec![2, 0, 0, 0, 99]);
     }
+
+    #[test]
+    fn test_input(){
+        let data: Vec<_> = include_str!("../../tests/2/input")
+            .trim()
+            .split(',')
+            .map(|s| s.parse::<usize>().unwrap())
+            .collect();
+        assert_eq!(part1(data.clone()), 19690720);
+        assert_eq!(part2(data), 5335);
+    }
 }

@@ -35,3 +35,15 @@ fn part2(input: &str) -> i32 {
         .map(fuel_sum)
         .sum()
 }
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+    fn test_input(){
+        let input = include_str!("../../tests/1/input");
+        assert_eq!(part1(&input), 3234871);
+        assert_eq!(part2(&input), 4849444);
+    }
+}

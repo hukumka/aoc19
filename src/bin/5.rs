@@ -24,3 +24,20 @@ fn exec(input: Vec<i32>, x: i32) -> i32 {
     }
     res
 }
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+    fn test_input(){
+        let input: Vec<_> = include_str!("../../tests/5/input")
+            .trim()
+            .split(',')
+            .map(|s| s.parse::<i32>().unwrap())
+            .collect();
+
+        assert_eq!(exec(input.clone(), 1), 7265618);
+        assert_eq!(exec(input.clone(), 5), 7731427);
+    }
+}

@@ -272,6 +272,7 @@ mod tests {
         let (w1, w2) = parse_input(input, 1000);
         b.iter(|| {
             let x = test::black_box(part1_smort(&w1, &w2));
+            assert_eq!(x, 399);
         })
     }
 
