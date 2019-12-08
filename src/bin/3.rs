@@ -258,8 +258,8 @@ mod tests {
 
     #[bench]
     fn bench(b: &mut test::Bencher) {
-        let input = get_input(3);
-        let (w1, w2) = parse_input(&input, 1000);
+        let input = include_str!("../../tests/3/input");
+        let (w1, w2) = parse_input(input, 1000);
         b.iter(|| {
             let x = test::black_box(part1(&w1, &w2));
             assert_eq!(x, 399);
@@ -268,8 +268,8 @@ mod tests {
 
     #[bench]
     fn bench_smort(b: &mut test::Bencher) {
-        let input = get_input(3);
-        let (w1, w2) = parse_input(&input, 1000);
+        let input = include_str!("../../tests/3/input");
+        let (w1, w2) = parse_input(input, 1000);
         b.iter(|| {
             let x = test::black_box(part1_smort(&w1, &w2));
         })

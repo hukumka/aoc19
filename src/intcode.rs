@@ -34,16 +34,16 @@ macro_rules! optcode{
     (#params $self: expr, $param: expr, (||)) => {}
 }
 
-pub struct IntCode{
+pub struct IntCode {
     data: Vec<i32>,
     input: VecDeque<i32>,
     output: VecDeque<i32>,
     ip: usize,
 }
 
-impl IntCode{
-    pub fn new(data: Vec<i32>) -> Self{
-        Self{
+impl IntCode {
+    pub fn new(data: Vec<i32>) -> Self {
+        Self {
             data,
             input: VecDeque::new(),
             output: VecDeque::new(),
@@ -52,12 +52,12 @@ impl IntCode{
     }
 
     /// returns true if still running, false if complete
-    pub fn step(&mut self) -> bool{
+    pub fn step(&mut self) -> bool {
         let code = self.data[self.ip];
         let opt = code % 100;
         let mut param = code / 100;
 
-        optcode!{ (self, opt, param)
+        optcode! { (self, opt, param)
             // optcode takes two arguments (a, b)
             // and stores result (c)
             1 => (|a, b| => c){
@@ -103,19 +103,19 @@ impl IntCode{
 
         true
     }
-    
-    pub fn input(&mut self) -> &mut VecDeque<i32>{
+
+    pub fn input(&mut self) -> &mut VecDeque<i32> {
         &mut self.input
     }
 
-    pub fn output(&mut self) -> &mut VecDeque<i32>{
+    pub fn output(&mut self) -> &mut VecDeque<i32> {
         &mut self.output
     }
 
-    fn inp(&mut self, params: &mut i32) -> i32{
+    fn inp(&mut self, params: &mut i32) -> i32 {
         let mode = *params % 10;
         *params /= 10;
-        let value = match mode{
+        let value = match mode {
             0 => self.data[self.data[self.ip] as usize],
             1 => self.data[self.ip],
             _ => panic!(),

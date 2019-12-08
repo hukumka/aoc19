@@ -9,6 +9,7 @@ edition = "2018"
 [dependencies]
 reformation = {git = "https://github.com/hukumka/reformation"}
 rpds = "0.7"
+itertools = "0.8"
 
 [profile.release]
 debug = true

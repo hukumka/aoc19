@@ -29,13 +29,11 @@ fn main() {
         count += parent_count(&mut cache, &parent, i.child);
     }
     println!("part1: {}", count);
-    
+
     // part2
     let p1 = parents(&parent, "YOU");
     let p2 = parents(&parent, "SAN");
-    let common = p1.iter().zip(&p2)
-        .filter(|(a, b)| a == b)
-        .count();
+    let common = p1.iter().zip(&p2).filter(|(a, b)| a == b).count();
     println!("part2: {}", p1.len() + p2.len() - common * 2);
 }
 
@@ -49,8 +47,12 @@ fn parents<'a>(parent: &HashMap<&'a str, &'a str>, mut node: &'a str) -> Vec<&'a
     res
 }
 
-fn parent_count<'a>(cache: &mut HashMap<&'a str, usize>, parent: &HashMap<&'a str, &'a str>, node: &'a str) -> usize {
-    if let Some(x) = cache.get(node){
+fn parent_count<'a>(
+    cache: &mut HashMap<&'a str, usize>,
+    parent: &HashMap<&'a str, &'a str>,
+    node: &'a str,
+) -> usize {
+    if let Some(x) = cache.get(node) {
         return *x;
     }
     let res = if let Some(x) = parent.get(node) {

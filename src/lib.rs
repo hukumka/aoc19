@@ -1,4 +1,4 @@
-use std::fs::{read_to_string, create_dir_all};
+use std::fs::{create_dir_all, read_to_string};
 use std::io::ErrorKind;
 use std::process::Command;
 
@@ -32,15 +32,16 @@ pub fn get_input(day: i32) -> String {
     }
 }
 
-fn load_input(day: &str, path: &str){
+fn load_input(day: &str, path: &str) {
     create_dir_all("./in").unwrap();
-    let cookies = match read_to_string("./.cookies"){
+    let cookies = match read_to_string("./.cookies") {
         Ok(s) => s,
         Err(e) => {
             panic!(
                 "Could not read `.cookies` file {}.\n\
-                In order to use autodownload feature create `.cookies` file\n\
-                with content 'session=[YOUR_AOC_SESSION_VAR]'", e
+                 In order to use autodownload feature create `.cookies` file\n\
+                 with content 'session=[YOUR_AOC_SESSION_VAR]'",
+                e
             );
         }
     };
