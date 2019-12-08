@@ -1,0 +1,15 @@
+[package]
+name = "aoc19"
+version = "0.1.0"
+authors = ["hukumka <hukumka212@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reformation = {git = "https://github.com/hukumka/reformation"}
+grid = {git = "https://github.com/hukumka/grid"}
+rpds = "0.7"
+
+[profile.release]
+debug = true
