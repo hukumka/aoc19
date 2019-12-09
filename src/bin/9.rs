@@ -11,7 +11,7 @@ fn main(){
         .collect();
 
     println!("part1: {}", exec(input.clone(), 1));
-    println!("part2: {}", exec(input.clone(), 2));
+    println!("part2: {}", exec(input, 2));
 }
 
 fn exec(input: Vec<i64>, x: i64) -> i64{

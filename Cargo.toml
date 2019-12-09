@@ -11,6 +11,7 @@ reformation = {git = "https://github.com/hukumka/reformation"}
 grid = {git = "https://github.com/hukumka/grid"}
 rpds = "0.7"
 itertools = "0.8"
+bytecount = "0.6"
 
 [profile.release]
 debug = true

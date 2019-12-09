@@ -1,5 +1,6 @@
 use grid::Grid;
 use aoc19::get_input;
+use bytecount::count;
 
 fn main(){
     let input = get_input(8);
@@ -41,8 +42,4 @@ fn part1(input: &[u8]) -> usize{
             count(x, b'1') * count(x, b'2')
         })
         .unwrap()
-}
-
-fn count(x: &[u8], target: u8) -> usize{
-    x.iter().filter(|x| **x == target).count()
 }

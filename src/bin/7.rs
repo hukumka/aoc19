@@ -7,14 +7,14 @@ fn main() {
     let program = input
         .trim()
         .split(',')
-        .map(|s| s.parse::<i32>().unwrap())
+        .map(|s| s.parse::<i64>().unwrap())
         .collect::<Vec<_>>();
 
     println!("part1: {}", part1(&program));
     println!("part2: {}", part2(&program));
 }
 
-fn part1(program: &[i32]) -> i32 {
+fn part1(program: &[i64]) -> i64 {
     (0..=4)
         .permutations(5)
         .map(|input| get_thrust(program, &input))
@@ -22,7 +22,7 @@ fn part1(program: &[i32]) -> i32 {
         .unwrap()
 }
 
-fn get_thrust(program: &[i32], input: &[i32]) -> i32 {
+fn get_thrust(program: &[i64], input: &[i64]) -> i64 {
     let mut intcodes: Vec<_> = (0..input.len())
         .map(|_| IntCode::new(Vec::from(program)))
         .collect();
@@ -37,7 +37,7 @@ fn get_thrust(program: &[i32], input: &[i32]) -> i32 {
     old_input
 }
 
-fn part2(program: &[i32]) -> i32 {
+fn part2(program: &[i64]) -> i64 {
     (5..=9)
         .permutations(5)
         .map(|input| get_thrust2(program, &input))
@@ -45,7 +45,7 @@ fn part2(program: &[i32]) -> i32 {
         .unwrap()
 }
 
-fn get_thrust2(program: &[i32], input: &[i32]) -> i32 {
+fn get_thrust2(program: &[i64], input: &[i64]) -> i64 {
     let mut intcodes: Vec<_> = input
         .iter()
         .map(|i| {
@@ -70,7 +70,7 @@ fn get_thrust2(program: &[i32], input: &[i32]) -> i32 {
     }
 }
 
-fn run_until_output(cpu: &mut IntCode) -> Option<i32> {
+fn run_until_output(cpu: &mut IntCode) -> Option<i64> {
     while cpu.output().is_empty() {
         if !cpu.step() {
             return None;
