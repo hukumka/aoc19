@@ -53,16 +53,16 @@ impl IntCode {
         }
     }
 
-    fn get_data(&self, addr: i64) -> i64{
-        if addr as usize >= self.data.len(){
+    fn get_data(&self, addr: i64) -> i64 {
+        if addr as usize >= self.data.len() {
             0
-        }else{
+        } else {
             self.data[addr as usize]
         }
     }
 
-    fn prep_addr(&mut self, addr: i64){
-        if addr as usize >= self.data.len(){
+    fn prep_addr(&mut self, addr: i64) {
+        if addr as usize >= self.data.len() {
             self.data.resize(addr as usize + 1, 0);
         }
     }
@@ -131,8 +131,8 @@ impl IntCode {
         &mut self.output
     }
 
-    fn get_addr(&mut self, params: &mut i64) -> i64{
-        let mode = *params %10;
+    fn get_addr(&mut self, params: &mut i64) -> i64 {
+        let mode = *params % 10;
         *params /= 10;
         let res = match mode {
             0 => self.data[self.ip],
@@ -148,5 +148,4 @@ impl IntCode {
         let addr = self.get_addr(params);
         self.get_data(addr)
     }
-
 }
