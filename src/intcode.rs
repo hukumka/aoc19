@@ -16,15 +16,15 @@ macro_rules! optcode{
 
     (#params $self: expr, $param: expr, (|$($var: ident),*| => $out: ident)) => {
         $(let $var = $self.inp(&mut $param);)*
-        let out_addr = $self.data[$self.ip] as usize;
-        $self.ip += 1;
-        let $out = &mut $self.data[out_addr];
+        let addr = $self.get_addr(&mut $param);
+        $self.prep_addr(addr);
+        let $out = &mut $self.data[addr as usize];
     };
 
     (#params $self: expr, $param: expr, (|| => $out: ident)) => {
-        let out_addr = $self.data[$self.ip] as usize;
-        $self.ip += 1;
-        let $out = &mut $self.data[out_addr];
+        let addr = $self.get_addr(&mut $param);
+        $self.prep_addr(addr);
+        let $out = &mut $self.data[addr as usize];
     };
 
     (#params $self: expr, $param: expr, (|$($var: ident),*|)) => {
@@ -35,19 +35,35 @@ macro_rules! optcode{
 }
 
 pub struct IntCode {
-    data: Vec<i32>,
-    input: VecDeque<i32>,
-    output: VecDeque<i32>,
+    data: Vec<i64>,
+    input: VecDeque<i64>,
+    output: VecDeque<i64>,
     ip: usize,
+    relative_base: i64,
 }
 
 impl IntCode {
-    pub fn new(data: Vec<i32>) -> Self {
+    pub fn new(data: Vec<i64>) -> Self {
         Self {
             data,
             input: VecDeque::new(),
             output: VecDeque::new(),
             ip: 0,
+            relative_base: 0,
+        }
+    }
+
+    fn get_data(&self, addr: i64) -> i64{
+        if addr as usize >= self.data.len(){
+            0
+        }else{
+            self.data[addr as usize]
+        }
+    }
+
+    fn prep_addr(&mut self, addr: i64){
+        if addr as usize >= self.data.len(){
+            self.data.resize(addr as usize + 1, 0);
         }
     }
 
@@ -99,28 +115,38 @@ impl IntCode {
                     *c = 0;
                 }
             },
+            9 => (|x|){
+                self.relative_base += x;
+            },
         }
 
         true
     }
 
-    pub fn input(&mut self) -> &mut VecDeque<i32> {
+    pub fn input(&mut self) -> &mut VecDeque<i64> {
         &mut self.input
     }
 
-    pub fn output(&mut self) -> &mut VecDeque<i32> {
+    pub fn output(&mut self) -> &mut VecDeque<i64> {
         &mut self.output
     }
 
-    fn inp(&mut self, params: &mut i32) -> i32 {
-        let mode = *params % 10;
+    fn get_addr(&mut self, params: &mut i64) -> i64{
+        let mode = *params %10;
         *params /= 10;
-        let value = match mode {
-            0 => self.data[self.data[self.ip] as usize],
-            1 => self.data[self.ip],
+        let res = match mode {
+            0 => self.data[self.ip],
+            1 => self.ip as i64,
+            2 => self.data[self.ip] + self.relative_base,
             _ => panic!(),
         };
         self.ip += 1;
-        value
+        res
     }
+
+    fn inp(&mut self, params: &mut i64) -> i64 {
+        let addr = self.get_addr(params);
+        self.get_data(addr)
+    }
+
 }

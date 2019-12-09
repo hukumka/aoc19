@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 reformation = {git = "https://github.com/hukumka/reformation"}
+grid = {git = "https://github.com/hukumka/grid"}
 rpds = "0.7"
 itertools = "0.8"
 

@@ -7,14 +7,14 @@ fn main() {
     let input: Vec<_> = input
         .trim()
         .split(',')
-        .map(|s| s.parse::<i32>().unwrap())
+        .map(|s| s.parse::<i64>().unwrap())
         .collect();
 
     println!("part1: {}", exec(input.clone(), 1));
     println!("part2: {}", exec(input, 5));
 }
 
-fn exec(input: Vec<i32>, x: i32) -> i32 {
+fn exec(input: Vec<i64>, x: i64) -> i64 {
     let mut intcode = IntCode::new(input);
     intcode.input().push_back(x);
     while intcode.step() {}
@@ -34,7 +34,7 @@ mod tests {
         let input: Vec<_> = include_str!("../../tests/5/input")
             .trim()
             .split(',')
-            .map(|s| s.parse::<i32>().unwrap())
+            .map(|s| s.parse::<i64>().unwrap())
             .collect();
 
         assert_eq!(exec(input.clone(), 1), 7265618);
